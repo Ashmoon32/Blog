@@ -26,42 +26,44 @@
                     </div>
                     <p class="card-text">{{  $article->body }}</p>
                     @auth
-                        <a 
-                            href="{{  url("/articles/delete/$article->id") }}" 
-                            class="btn btn-warning">
-                            Delete
-                        </a>
-                        <a href="{{ url("/articles/edit/$article->id") }}" class="btn btn-info">
-                            Edit
-                        </a>
+                        @if(auth()->user()->id == $article->user_id)
+                            <a 
+                                href="{{  url("/articles/delete/$article->id") }}" 
+                                class="btn btn-warning">
+                                Delete
+                            </a>
+                            <a href="{{ url("/articles/edit/$article->id") }}" class="btn btn-info">
+                                Edit
+                            </a>
+                        @endif
                     @endauth
-
                 </div>
             </div>
-            <ul class="list-group mb-2">
+                <ul class="list-group mb-2">
                         @if($errors->any())
                             <div class="alert alert-warning">
                                 <div>{{  $errors->first() }}</div>
                             </div>
                         @endif
+
                         @auth
-                <li class="list-group-item active">
-                    <b>Comments ({{ count($article->comments) }})</b>
-                </li>
-                @foreach($article->comments as $comment)
-                <li class="list-group-item">
-                    <a href="{{ url("/comments/delete/$comment->id") }}" class="btn-close float-end"></a>
-                    {{ $comment->content }}
-                    <div class="small mt-2">
-                        By <b>{{  $comment->user->name }}</b>,
-                        {{  $comment->created_at->diffForHumans() }}
-                    </div>
-                </li>
-                @endforeach
-                @else
-                <div class="alert alert-danger text-center">Only logged in users can see comments</div>
-                @endauth
-            </ul>
+                            <li class="list-group-item active">
+                                <b>Comments ({{ count($article->comments) }})</b>
+                            </li>
+                            @foreach($article->comments as $comment)
+                            <li class="list-group-item">
+                                <a href="{{ url("/comments/delete/$comment->id") }}" class="btn-close float-end"></a>
+                                {{ $comment->content }}
+                                <div class="small mt-2">
+                                    By <b>{{  $comment->user->name }}</b>,
+                                    {{  $comment->created_at->diffForHumans() }}
+                                </div>
+                            </li>
+                            @endforeach
+                        @else
+                            <div class="alert alert-danger text-center">Only logged in users can see comments</div>
+                        @endauth
+                </ul>
 
             @auth
                 <form action="{{ url("/comments/add") }}" method="post">
