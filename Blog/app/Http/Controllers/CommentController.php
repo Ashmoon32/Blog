@@ -10,11 +10,19 @@ class CommentController extends Controller
 {
     public function create(Request $request)
     {
+
+        $validator = validator($request->all(), [
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
         $comment = new Comment();
         $comment->content = $request->input('content');
         $comment->article_id = $request->input('article_id');
 
-        $comment->user_id = auth()->id();
+        $comment->user_id = auth()->user()->id;
         $comment->save();
 
         return back();
@@ -22,18 +30,15 @@ class CommentController extends Controller
 
     public function delete($id)
     {
-        $comment = Comment::find($id);
-
-        if( Gate::allows('comment-delete', $comment) ) {
-            $comment->delete();
-            return back();
-        } else {
+        $comment = Comment::findOrFail($id);
+        if (Gate::denies('comment-delete', $comment)) {
             return back()->with('error', 'Unauthorize');
         }
-        // $comment->delete();
-
-        // return back();
+        $comment->delete();
+        return back();
     }
+
+
 
     public function __construct()
     {

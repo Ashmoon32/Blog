@@ -60,15 +60,15 @@ class DatabaseSeeder extends Seeder
     {
         // 1. Create Users FIRST
         // This creates User ID 1 and User ID 2
-        User::factory()->create([
-            "name" => "Alice",
-            "email" => "alice@gmail.com",
-        ]);
+        // User::factory()->create([
+        //     "name" => "Alice",
+        //     "email" => "alice@gmail.com",
+        // ]);
 
-        User::factory()->create([
-            "name" => "Bob",
-            "email" => "bob@gmail.com",
-        ]);
+        // User::factory()->create([
+        //     "name" => "Bob",
+        //     "email" => "bob@gmail.com",
+        // ]);
 
         // 2. Create Categories
         Category::factory()->count(5)->create();

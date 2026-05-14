@@ -45,10 +45,14 @@ Route::get('/articles/add', [ArticleController::class, 'add']);
 
 Route::post('/articles/add', [ArticleController::class, 'create']);
 
-Route::get('/articles/delete/{id}', [ArticleController::class, 'delete']);
+Route::get('/articles/delete/{id}', [ArticleController::class, 'delete'])->middleware('auth');
 
 Route::post('/comments/add', [CommentController::class, 'create']);
 
-Route::get('/comments/delete/{id}', [CommentController::class, 'delete']);
+Route::get('/comments/delete/{id}', [CommentController::class, 'delete'])->middleware('auth');
+
+Route::get('/articles/edit/{id}', [ArticleController::class, 'edit'])->middleware('auth');
+
+Route::put('/articles/update/{id}', [ArticleController::class, 'update'])->middleware('auth');
 
 Route::get('/articles/add', [ArticleController::class, 'add'])->middleware('auth');
