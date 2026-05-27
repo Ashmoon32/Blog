@@ -12,10 +12,11 @@
     @section("content")
         <div class="container">
 
-            
+
             @if(session('info'))
-                <div class="alert alert-info">
+                <div class="alert alert-info" role="alert">
                     {{ session('info') }}
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 

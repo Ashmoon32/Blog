@@ -38,6 +38,22 @@ class CommentController extends Controller
         return back();
     }
 
+    public function edit($id)
+    {
+        $comment = Comment::find($id);
+        return view('comments.edit', [
+            'comment' => $comment
+        ]);
+    }
+
+    public function update($id)
+    {
+        $comment = Comment::find($id);
+        $comment->content = request()->input('content');
+        $comment->save();
+        return redirect("/articles/detail/$comment->article_id")->with('info', 'Comment updated');
+    }
+
 
 
     public function __construct()
