@@ -19,6 +19,9 @@
                     <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            <div>
+                <a href="{{ url("/articles") }}" class="btn btn-dark mb-2">&laquo; Back to List</a>
+            </div>
             <div class="card mb-2">
                 <div class="card-body">
                     <h5 class="card-title">{{  $article->title  }}</h5>
